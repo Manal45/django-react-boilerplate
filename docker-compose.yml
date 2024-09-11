@@ -7,7 +7,7 @@ services:
     container_name: boilerplate-backend
     stdin_open: true
     tty: true
-    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
+    command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8001'
     volumes:
       - ./backend/:/app/src/ # maps host directory to internal container directory
     networks:
@@ -34,7 +34,7 @@ services:
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
     ports:
-      - 8000:80
+      - 8001:80
       - 3000:8080
     depends_on:
       - backend

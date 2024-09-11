@@ -5,15 +5,16 @@
  * Upgrading from v5
  * https://reactrouter.com/docs/en/v6/upgrading/v5
  */
-import { Routes, Route } from 'react-router-dom'
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
-import { Home } from '../pages/Home'
-import { Login } from '../pages/Login'
-import { Metrics } from '../pages/Metrics'
-import { Register } from '../pages/Register'
-import { Users } from '../pages/Users'
-import { PrivateRoute } from './PrivateRoute'
-import { PublicRoute } from './PublicRoute'
+import { Home } from '../pages/Home';
+import { Login } from '../pages/Login';
+import { Metrics } from '../pages/Metrics';
+import { Register } from '../pages/Register';
+import { Users } from '../pages/Users';
+import { PrivateRoute } from './PrivateRoute';
+import { PublicRoute } from './PublicRoute';
 
 export const RouteList = () => (
   <Routes>
@@ -21,7 +22,7 @@ export const RouteList = () => (
       path="/"
       element={
         <PrivateRoute redirectTo="/login">
-          <Home />
+          <Home/>
         </PrivateRoute>
       }
     />
@@ -30,18 +31,18 @@ export const RouteList = () => (
       path="/login"
       element={
         <PublicRoute>
-          <Login />
+          <Login/>
         </PublicRoute>
       }
     />
 
-    <Route path="/register" element={<Register />} />
+    <Route path="/register" element={<Register/>}/>
 
     <Route
       path="/metrics"
       element={
         <PrivateRoute permissions={['metrics.list']} redirectTo="/login">
-          <Metrics />
+          <Metrics/>
         </PrivateRoute>
       }
     />
@@ -50,7 +51,7 @@ export const RouteList = () => (
       path="/users"
       element={
         <PrivateRoute permissions={['users.list', 'users.create']}>
-          <Users />
+          <Users/>
         </PrivateRoute>
       }
     />
@@ -59,11 +60,11 @@ export const RouteList = () => (
       path="/users/:id"
       element={
         <PrivateRoute permissions={['users.list', 'users.create']}>
-          <Users />
+          <Users/>
         </PrivateRoute>
       }
     />
 
-    <Route path="*" element={<h1>404</h1>} />
+    <Route path="*" element={<h1>404</h1>}/>
   </Routes>
-)
+);

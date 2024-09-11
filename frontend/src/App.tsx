@@ -1,8 +1,9 @@
-import { BrowserRouter } from 'react-router-dom'
+import React from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-import { NavBar } from './components/NavBar'
-import { AuthProvider } from './context/AuthContext'
-import { RouteList } from './routes'
+import { NavBar } from './components/NavBar';
+import { AuthProvider } from './context/AuthContext';
+import { RouteList } from './routes';
 
 // import Container from "react-bootstrap/Container";
 // import Button from 'react-bootstrap/Button';
@@ -14,10 +15,10 @@ import { RouteList } from './routes'
 const App = () => (
   <BrowserRouter>
     <AuthProvider>
-      <NavBar />
-      <RouteList />
+      <NavBar/>
+      <RouteList/>
     </AuthProvider>
   </BrowserRouter>
-)
+);
 
-export default App
+export default App;

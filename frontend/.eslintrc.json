@@ -22,23 +22,77 @@
     "eslint-plugin-import-helpers"
   ],
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "import-helpers/order-imports": [
-      "warn",
+    "arrow-parens": [
+      0,
+      "as-needed",
       {
-        "newlinesBetween": "always",
-        "groups": [
-          ["/^react/", "module"],
-          ["parent", "sibling", "index"]
-        ],
-        "alphabetize": {
-          "order": "asc",
-          "ignoreCase": true
-        }
+        "requireForBlockBody": false
       }
-    ]
+    ],
+    "eol-last": [
+      2,
+      "always"
+    ],
+    "no-console": [
+      2,
+      {
+        "allow": [
+          "warn",
+          "error",
+          "info"
+        ]
+      }
+    ],
+    "semi": [
+      2,
+      "always"
+    ],
+    "object-shorthand": [
+      "error",
+      "always",
+      {
+        "avoidQuotes": true
+      }
+    ],
+    "quote-props": [
+      "error",
+      "consistent-as-needed"
+    ],
+    "object-curly-spacing": [
+      1,
+      "always"
+    ],
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "always",
+        "named": "never"
+      }
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "valid-typeof": [
+      0
+    ],
+    "no-unused-vars": [
+      0
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "varsIgnorePattern": "^_.",
+        "argsIgnorePattern": "^_."
+      }
+    ],
+    "react/no-unknown-property": [
+      "error",
+      {
+        "ignore": ["css"]
+      }
+    ],
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"]
   }
 }

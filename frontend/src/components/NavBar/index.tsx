@@ -1,11 +1,11 @@
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
-import { AuthContext } from '../../context/AuthContext'
-import { CanAccess } from '../CanAccess'
+import { AuthContext } from '../../context/AuthContext';
+import { CanAccess } from '../CanAccess';
 
-export function NavBar () {
-  const { isAuthenticated, user, signOut } = useContext(AuthContext)
+export function NavBar() {
+  const { isAuthenticated, user, signOut } = useContext(AuthContext);
 
   return (
     <div>
@@ -28,5 +28,5 @@ export function NavBar () {
         </>
       )}
     </div>
-  )
+  );
 }
