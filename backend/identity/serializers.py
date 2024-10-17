@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from .models import User
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
 class RegistrationSerializer(serializers.ModelSerializer[User]):
@@ -18,7 +17,7 @@ class RegistrationSerializer(serializers.ModelSerializer[User]):
         user.set_password(validated_data['password'])
         user.first_name = validated_data.get('first_name', '')
         user.last_name = validated_data.get('last_name', '')
-        user.save(update_fields=['first_name', 'last_name'])
+        user.save()
         return user
 
 

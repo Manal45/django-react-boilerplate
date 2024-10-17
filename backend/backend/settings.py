@@ -82,12 +82,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'django_nginx',
-        'USER': 'django_nginx_role',
-        'PASSWORD': 'django_nginx_password',
-        'HOST': 'postgres',  # <-- IMPORTANT: same name as docker-compose service!
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB', 'django_db'),
+        'USER': os.getenv('POSTGRES_USER', 'postgres_user'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'postgres_password'),
+        'HOST': os.getenv('POSTGRES_HOST', 'localhost'),  # This defaults to localhost if not in Docker
+        'PORT': os.getenv('POSTGRES_PORT', '5432'),
     }
 }
 

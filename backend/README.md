@@ -68,6 +68,25 @@ In order to create a local postgres Database you can follow this [DigitalOcean g
 And remember to grant the db user create privileges so that it can create the test database 
 `ALTER USER username CREATEDB;` using `psql`.
 
+Depending on your database settings:
+
+```sql
+    -- Create a new database
+    CREATE DATABASE django_db;
+    
+    -- Create a user with a password
+    CREATE USER postgres_user WITH PASSWORD 'postgres_password';
+    ALTER USER postgres_user WITH CREATEDB;
+    
+    -- Set user configuration for encoding, isolation level, and timezone
+    ALTER ROLE postgres_user SET client_encoding TO 'utf8';
+    ALTER ROLE postgres_user SET default_transaction_isolation TO 'read committed';
+    ALTER ROLE postgres_user SET timezone TO 'UTC';
+    
+    -- Grant privileges to the user on the database
+    GRANT ALL PRIVILEGES ON DATABASE django_db TO postgres_user;
+```
+
 With a postgres database created you would need to create a local pytest.ini file and local settings 
 which override your database settings.
 

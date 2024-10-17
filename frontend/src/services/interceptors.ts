@@ -1,7 +1,10 @@
-import { AxiosDefaults, AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosDefaults, AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import { createTokenCookies, getRefreshToken, getToken, removeTokenCookies } from '../utils/tokenCookies';
 import { api } from './api';
+
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "csrftoken";
 
 interface IFailedRequestQueue {
   onSuccess: (token: string) => void

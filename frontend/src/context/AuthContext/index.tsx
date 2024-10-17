@@ -1,6 +1,6 @@
-import { AxiosError } from 'axios';
 import React, { createContext, ReactNode, useEffect, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { AxiosError } from 'axios';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { api } from '../../services/api';
 import { setAuthorizationHeader } from '../../services/interceptors';
@@ -17,8 +17,16 @@ interface SignInCredentials {
   password: string
 }
 
+interface SignUpCredentials {
+  name: string;
+  surname: string;
+  email: string;
+  password: string;
+}
+
 interface AuthContextData {
   signIn: (credentials: SignInCredentials) => Promise<void | AxiosError>
+  signUp: (credentials: SignUpCredentials) => Promise<void | AxiosError>;
   signOut: () => void
   user: User
   isAuthenticated: boolean
@@ -48,6 +56,16 @@ export function AuthProvider({ children }: AuthProviderProps) {
       createTokenCookies(access, refresh);
       setUser({ email, permissions, roles });
       setAuthorizationHeader(api.defaults, access);
+    } catch (error) {
+      const err = error as AxiosError;
+      return err;
+    }
+  }
+
+  async function signUp({ name, surname, email, password }: SignUpCredentials) {
+    try {
+      const response = await api.post('/register/', { first_name: name, last_name: surname, email, password });
+      console.log(response.data);
     } catch (error) {
       const err = error as AxiosError;
       return err;
@@ -97,6 +115,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
       user: userData,
       loadingUserData,
       signIn,
+      signUp,
       signOut
     }}>
       {children}

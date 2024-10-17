@@ -23,6 +23,11 @@ class LoginTests(APITestCase):
                                  'password': ['This field is required.']}
 
     def test_login_valid(self):
+        """ Check that we can login with the users password """
+        # Check that the user exists and has a valid password
+        assert User.objects.filter(email=self.user.email).exists()
+        assert self.user.check_password('defaultpassword')
+
         response = self.client.post(self.url, data={'email': self.user.email, 'password': 'defaultpassword'})
         print(response.data)
 

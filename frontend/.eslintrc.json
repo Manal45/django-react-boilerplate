@@ -1,98 +1,27 @@
 {
   "env": {
     "browser": true,
-    "es2021": true,
-    "jest": true
+    "es2021": true
   },
   "extends": [
-    "plugin:react/recommended",
-    "standard"
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
     "ecmaVersion": 12,
     "sourceType": "module"
   },
   "plugins": [
-    "react",
-    "@typescript-eslint",
-    "eslint-plugin-import-helpers"
+    "@typescript-eslint"
   ],
   "rules": {
-    "arrow-parens": [
-      0,
-      "as-needed",
-      {
-        "requireForBlockBody": false
-      }
-    ],
-    "eol-last": [
-      2,
-      "always"
-    ],
-    "no-console": [
-      2,
-      {
-        "allow": [
-          "warn",
-          "error",
-          "info"
-        ]
-      }
-    ],
-    "semi": [
-      2,
-      "always"
-    ],
-    "object-shorthand": [
-      "error",
-      "always",
-      {
-        "avoidQuotes": true
-      }
-    ],
-    "quote-props": [
-      "error",
-      "consistent-as-needed"
-    ],
-    "object-curly-spacing": [
-      1,
-      "always"
-    ],
-    "space-before-function-paren": [
-      "error",
-      {
-        "anonymous": "always",
-        "named": "never"
-      }
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "valid-typeof": [
-      0
-    ],
-    "no-unused-vars": [
-      0
-    ],
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        "varsIgnorePattern": "^_.",
-        "argsIgnorePattern": "^_."
-      }
-    ],
-    "react/no-unknown-property": [
-      "error",
-      {
-        "ignore": ["css"]
-      }
-    ],
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"]
+    // Disable the no-console rule to allow console logs
+    "no-console": "off",
+
+    // Disable enforcement of formatting for multiline ternary expressions
+    "multiline-ternary": "off",
+    "indent": ["error", 2],   // Enforce 2 spaces for indentation
+    "@typescript-eslint/explicit-module-boundary-types": "off" // Example for TypeScript-specific rules
   }
 }

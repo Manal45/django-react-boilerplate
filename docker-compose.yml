@@ -8,6 +8,8 @@ services:
     stdin_open: true
     tty: true
     command: bash -c 'while !</dev/tcp/postgres/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8001'
+    env_file:
+      - env.db
     volumes:
       - ./backend/:/app/src/ # maps host directory to internal container directory
     networks:
@@ -43,7 +45,7 @@ services:
       - nginx_network
 
   postgres:
-    image: postgres:12
+    image: postgres:15
     env_file:
       - env.db
     networks:
