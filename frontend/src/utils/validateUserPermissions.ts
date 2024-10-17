@@ -1,7 +1,4 @@
-interface User {
-  permissions: string[]
-  roles: string[]
-}
+import { User } from '../interfaces';
 
 interface validateUserPermissionsParams {
   user: User
@@ -21,8 +18,9 @@ export function validateUserPermissions({ user, permissions, roles }: validateUs
     });
   }
 
+  // Check if user has all required roles by comparing role names with group names
   if (roles?.length) {
-    const userRoles = user?.roles || [];
+    const userRoles = user?.groups?.map(group => group.name) || [];
 
     hasAllRoles = roles.every(role => {
       return userRoles.includes(role);

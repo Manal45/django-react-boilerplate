@@ -1,3 +1,4 @@
+from django.contrib.auth.models import Group
 from rest_framework import serializers
 
 from .models import User
@@ -20,11 +21,21 @@ class RegistrationSerializer(serializers.ModelSerializer[User]):
         user.save()
         return user
 
+class GroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ['id', 'name']
+
 
 class UserSerializer(serializers.ModelSerializer[User]):
     """Handle serialization and deserialization of User objects."""
+    permissions = serializers.SerializerMethodField()
+    groups = GroupSerializer(many=True, read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'email', 'first_name', 'last_name', 'is_staff']
-        read_only_fields = ['id', 'email', 'is_staff']
+        fields = ['id', 'email', 'first_name', 'last_name', 'is_staff', 'is_active', 'groups', 'permissions']
+        read_only_fields = ['id', 'email', 'is_staff', 'is_active']
+
+    def get_permissions(self, obj):
+        return list(obj.get_group_permissions())

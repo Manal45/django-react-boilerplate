@@ -45,8 +45,8 @@ export function NavBar() {
               </>
             ) : (
               <>
-                <Button variant="outline-primary link" href="/login">Login</Button>
-                <Button variant="outline-secondary link" href="/register" className="ms-2">Register</Button>
+                <Button variant="outline-primary link" href="/login" style={{ maxWidth: '150px', width: '100%' }}>Login</Button>
+                <Button variant="outline-secondary link" href="/register" className="ms-2" style={{ maxWidth: '150px', width: '100%' }}>Register</Button>
               </>
             )}
           </Nav>

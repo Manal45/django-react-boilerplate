@@ -13,6 +13,7 @@ import { Login } from '../pages/Login';
 import { Metrics } from '../pages/Metrics';
 import { Register } from '../pages/Register';
 import { Users } from '../pages/Users';
+import { Profile } from '../pages/Profile';
 import { PrivateRoute } from './PrivateRoute';
 import { PublicRoute } from './PublicRoute';
 
@@ -42,6 +43,15 @@ export const RouteList = () => (
           <Register/>
         </PublicRoute>
       }/>
+
+      <Route
+        path={"/profile"}
+        element={
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        }
+      />
 
       <Route
         path="/metrics"

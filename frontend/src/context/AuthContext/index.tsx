@@ -5,12 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { api } from '../../services/api';
 import { setAuthorizationHeader } from '../../services/interceptors';
 import { createTokenCookies, getToken, removeTokenCookies } from '../../utils/tokenCookies';
-
-interface User {
-  email: string
-  permissions: string[]
-  roles: string[]
-}
+import { User } from '../../interfaces';
 
 interface SignInCredentials {
   email: string
@@ -48,19 +43,42 @@ export function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = Boolean(token);
   const userData = user as User;
 
+  async function setUserData() {
+    setLoadingUserData(true);
+
+    try {
+      const response = await api.get('/user/');
+
+      if (response?.data) {
+        const { email, permissions, groups, first_name:name, last_name:surname } = response.data;
+        console.log(response.data);
+        setUser({ email, permissions, groups, name, surname });
+      }
+    } catch (error) {
+      signOut();
+    }
+
+    setLoadingUserData(false);
+  }
+
   async function signIn({ email, password }: SignInCredentials) {
     try {
       const response = await api.post('/login/', { email, password });
-      const { access, refresh, permissions, roles } = response.data;
+      const { access, refresh } = response.data;
+      console.log(response.data);
 
       createTokenCookies(access, refresh);
-      setUser({ email, permissions, roles });
       setAuthorizationHeader(api.defaults, access);
+      // get user data after successful login to set user state
+      await setUserData();
+
     } catch (error) {
       const err = error as AxiosError;
       return err;
     }
   }
+
+
 
   async function signUp({ name, surname, email, password }: SignUpCredentials) {
     try {
@@ -93,8 +111,9 @@ export function AuthProvider({ children }: AuthProviderProps) {
         const response = await api.get('/user/');
 
         if (response?.data) {
-          const { email, permissions, roles } = response.data;
-          setUser({ email, permissions, roles });
+          const { email, permissions, groups, first_name:name, last_name:surname } = response.data;
+          console.log(response.data);
+          setUser({ email, permissions, groups, name, surname });
         }
       } catch (error) {
         signOut();
