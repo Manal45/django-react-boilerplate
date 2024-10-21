@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'django_filters',
     'django_extensions',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -126,7 +127,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-STATIC_URL = '/static/'
+# Configure local storage for static files
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+        "OPTIONS": {
+            "location": os.path.join(BASE_DIR, 'media'),
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "OPTIONS": {
+            "location": os.path.join(BASE_DIR, 'static'),
+        },
+    },
+}
+
+# Local static URL
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -186,3 +204,34 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
   }
+
+# Determine whether to use Azure storage for static files
+USE_AZURE_STORAGE = os.getenv('USE_AZURE_STORAGE', 'False') == 'True'
+
+if USE_AZURE_STORAGE:
+    # Configure Azure storage for static files
+    STORAGES = {
+        "default": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+            "OPTIONS": {
+                "location": os.path.join(BASE_DIR, 'media'),
+            },
+        },
+        "staticfiles": {
+            "BACKEND": "storages.backends.azure_storage.AzureStorage",
+            "OPTIONS": {
+                "account_name": os.getenv('AZURE_ACCOUNT_NAME', 'your-account-name'),
+                "account_key": os.getenv('AZURE_ACCOUNT_KEY', 'your-account-key'),
+                "azure_container": os.getenv('AZURE_STATIC_CONTAINER', 'your-static-container'),
+                "custom_domain": f"{os.getenv('AZURE_ACCOUNT_NAME')}.blob.core.windows.net",
+            },
+        },
+    }
+
+    # Set the static URL to point to the Azure Blob Storage
+    STATIC_URL = f"https://{os.getenv('AZURE_ACCOUNT_NAME')}.blob.core.windows.net/{os.getenv('AZURE_STATIC_CONTAINER')}/"
+
+
+
+print('USE_AZURE_STATIC_STORAGE', USE_AZURE_STORAGE)
+print('STORAGES', STORAGES)
