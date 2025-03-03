@@ -1,1 +1,9 @@
-ReadMe
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "webapp_rg" {
+  name     = "webapp-resource-group"
+  location = "East US"
+}
+
